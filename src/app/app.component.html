@@ -26,13 +26,13 @@
         <div class="form-group mb-3">
             <label for="exampleInputEmail1">Description</label>
             <input type="text" class="form-control" placeholder="Description" aria-label="Description"
-                   aria-describedby="basic-addon1">
+                   aria-describedby="basic-addon1" (change)="this.fileDescription=$event.target.value">
         </div>
 
         <div class="form-group mb-3">
             <label for="exampleInputEmail1">Email address</label>
             <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
-                   placeholder="Enter email">
+                   placeholder="Enter email" (change)="this.fileSenderEmail=$event.target.value">
             <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.
             </small>
         </div>

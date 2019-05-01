@@ -22,15 +22,15 @@ export class AppComponent {
     uploadFileToActivity() {
         event.preventDefault();
         if (this.fileList != null && this.fileList.length > 0) {
-            // const formData = new FormData();
-            // formData.append('fileContent', this.fileList[0]);
-            // formData.append('fileDescription', this.fileDescription);
-            // formData.append('fileSenderEmail', this.fileSenderEmail);
-            this.fileUploadService.sendFile(this.fileList).subscribe(data => {
-                console.log('success');
-            }, error => {
-                AppComponent.handleError(error);
-            });
+            this.fileUploadService.sendFile({
+                fileList: this.fileList,
+                fileDescription: this.fileDescription,
+                fileSenderEmail: this.fileSenderEmail
+            }).subscribe(data => {
+                    console.log('success');
+                }, error => {
+                    AppComponent.handleError(error);
+                });
         }
     }
 }
