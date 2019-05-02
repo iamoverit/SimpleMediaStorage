@@ -18,25 +18,53 @@
             </div>
             <div class="custom-file">
                 <input type="file" class="custom-file-input" id="inputMediaFile01"
-                       aria-describedby="inputMediaFileAddon01" (change)="this.fileList=$event.target.files">
+                       aria-describedby="inputMediaFileAddon01" name="fileList" required [(ngModel)]="this.fileList"
+                       #file="ngModel">
                 <label class="custom-file-label" for="inputMediaFile01">Choose file</label>
+            </div>
+            <div *ngIf="file.invalid && (file.dirty || file.touched)" class="input-group-append">
+                <span class="input-group-text alert-danger" *ngIf="file.errors.required">
+                    You must choose a file.
+                </span>
             </div>
         </div>
 
         <div class="form-group mb-3">
             <label for="exampleInputEmail1">Description</label>
-            <input type="text" class="form-control" placeholder="Description" aria-label="Description"
-                   aria-describedby="basic-addon1" (change)="this.fileDescription=$event.target.value">
+            <div class="input-group mb-3">
+                <input type="text" class="form-control" placeholder="Description" aria-label="Description"
+                       aria-describedby="basic-addon1" name="fileDescription" required
+                       [(ngModel)]="this.fileDescription"
+                       #description="ngModel">
+                <div *ngIf="description.invalid && (description.dirty || description.touched)"
+                     class="input-group-append">
+                <span class="input-group-text alert-danger" *ngIf="description.errors.required">
+                    Description is required.
+                </span>
+                </div>
+            </div>
         </div>
 
         <div class="form-group mb-3">
             <label for="exampleInputEmail1">Email address</label>
-            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
-                   placeholder="Enter email" (change)="this.fileSenderEmail=$event.target.value">
+            <div class="input-group mb-3">
+                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+                       placeholder="Enter email" name="fileSenderEmail" required email
+                       [(ngModel)]="this.fileSenderEmail"
+                       #email="ngModel">
+                <div *ngIf="email.invalid && (email.dirty || email.touched)" class="input-group-append">
+                    <span class="input-group-text alert-danger" *ngIf="email.errors.required">
+                        Email is required.
+                    </span>
+                    <span class="input-group-text alert-danger" *ngIf="email.errors.email">
+                        Email field is must be a valid e-mail address.
+                    </span>
+                </div>
+            </div>
             <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.
             </small>
         </div>
-        <button class="btn btn-primary" (click)="uploadFileToActivity()">Submit</button>
+        <button class="btn btn-primary" [disabled]="!email.valid||!description.valid||!file.valid" (click)="uploadFileToActivity()">Submit</button>
 
     </form>
 
