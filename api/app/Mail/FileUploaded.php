@@ -13,16 +13,16 @@ class FileUploaded extends Mailable
     /**
      * @var UserFiles
      */
-    protected $userFile;
+    protected $url;
 
     /**
      * Create a new message instance.
      *
      * @param UserFiles $userFile
      */
-    public function __construct(UserFiles $userFile)
+    public function __construct(string $url)
     {
-        $this->userFile = $userFile;
+        $this->url = $url;
     }
 
     /**
@@ -32,6 +32,6 @@ class FileUploaded extends Mailable
      */
     public function build()
     {
-        return $this->markdown('emails.file.uploaded')->with('url', $this->userFile->file_hash);
+        return $this->markdown('emails.file.uploaded')->with('url', $this->url);
     }
 }

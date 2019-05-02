@@ -5,13 +5,34 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreFilePost;
 use App\Mail\FileUploaded;
 use App\Models\UserFiles;
+use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Storage;
 use Mockery\Exception;
 
-class FileUpload extends Controller
+class SimpleMediaStorage extends Controller
 {
+    private static $uploadedPath = '/uploaded';
+
+    public function index(Request $request)
+    {
+        $user_hash = $request->route('user_hash');
+        $file_hash = $request->route('file_hash');
+        $headers = [
+            'Set-Cookie' => 'fileDownload=true; path=/',
+        ];
+        $file = UserFiles::where(
+            [
+                'user_hash' => $user_hash,
+                'file_hash' => $file_hash,
+            ]
+        )->firstOrFail();
+
+        return Storage::download(self::$uploadedPath."/".$user_hash."/".$file_hash, $file->filename, $headers);
+    }
+
     public function store(StoreFilePost $request)
     {
 
@@ -24,7 +45,7 @@ class FileUpload extends Controller
             $file = $request->fileContent;
             $fileHash = hash_file('md5', $file);
             $userHash = hash('md5', $request->input('fileSenderEmail'));
-            $file->storeAs('uploaded'.'/'.$userHash, $fileHash);
+            $file->storeAs(self::$uploadedPath.'/'.$userHash, $fileHash);
             $userFileModel = new UserFiles();
             $userFileModel->description = $request->input('fileDescription');
             $userFileModel->email = $request->input('fileSenderEmail');
@@ -32,7 +53,8 @@ class FileUpload extends Controller
             $userFileModel->user_hash = $userHash;
             $userFileModel->filename = $file->getClientOriginalName();
             $userFileModel->save();
-            Mail::to($userFileModel->email)->send(new FileUploaded($userFileModel));
+            Mail::to($userFileModel->email)
+                ->send(new FileUploaded(self::$uploadedPath.'/'.$userHash.'/'.$fileHash));
         } catch (Exception $exception) {
             DB::rollBack();
 

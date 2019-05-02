@@ -13,6 +13,5 @@ use App\Http\Requests\StoreFilePost;
 |
 */
 
-/*middleware('auth:api')->*/
+Route::post('/file', 'SimpleMediaStorage@store');
 
-Route::post('/file-upload', 'FileUpload@store');

@@ -14,3 +14,5 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/uploaded/{user_hash}/{file_hash}', 'SimpleMediaStorage@index');
