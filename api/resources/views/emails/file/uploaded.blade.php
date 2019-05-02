@@ -3,8 +3,8 @@
 
 Url to your file.
 
-@component('mail::button', ['url' => $url])
-$url
+@component('mail::button', ['url' => config('app.url').$url])
+    {{ config('app.url').$url }}
 @endcomponent
 
 Thanks,<br>
