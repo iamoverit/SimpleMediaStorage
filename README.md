@@ -2,6 +2,11 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.3.8.
 
+## Configuring
+
+Use [`src/environment.prod.ts`](src/environment.prod.ts) for production build and [`src/environment.ts`](`src/environment.ts`) for development build.
+Specify backend api server.
+
 ## Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
@@ -28,4 +33,4 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 
 ## API Backend
 
-To get API backend deployed go to api folder and follow instructions.
+To get API backend deployed go to [api folder](api/) and follow instructions.
