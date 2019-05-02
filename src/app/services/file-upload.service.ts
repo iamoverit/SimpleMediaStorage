@@ -22,7 +22,10 @@ export class FileUploadService {
     }
 
     sendFile(options: { fileList: FileList; fileDescription: string; fileSenderEmail: string; }) {
-        const file = options.fileList[0];
+        let file = null;
+        if (options.fileList != null) {
+            file = options.fileList[0];
+        }
         const httpParams = new HttpParams()
             .append('fileDescription', options.fileDescription)
             .append('fileSenderEmail', options.fileSenderEmail);

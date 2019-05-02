@@ -6,6 +6,7 @@ import {AppComponent} from './app.component';
 import {FileUploadService} from './services/file-upload.service';
 import {HttpClientModule} from '@angular/common/http';
 import {AlertMessageComponent} from './alert-message/alert-message.component';
+import {FormsModule} from '@angular/forms';
 
 @NgModule({
     declarations: [
@@ -15,7 +16,8 @@ import {AlertMessageComponent} from './alert-message/alert-message.component';
     imports: [
         BrowserModule,
         AppRoutingModule,
-        HttpClientModule
+        HttpClientModule,
+        FormsModule
     ],
     providers: [FileUploadService],
     bootstrap: [AppComponent]

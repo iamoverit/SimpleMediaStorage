@@ -1,3 +1,6 @@
 <div [ngClass]="currentClasses" role="alert">
   {{ message }}
+  <li *ngFor="let errMessage of messages">
+    <span>{{errMessage}}</span>
+  </li>
 </div>

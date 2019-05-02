@@ -8,7 +8,7 @@ import {Component, Input, OnInit, Output} from '@angular/core';
 export class AlertMessageComponent implements OnInit {
     message: string;
     currentClasses: {};
-
+    messages: [];
     constructor() {
     }
 
@@ -23,11 +23,12 @@ export class AlertMessageComponent implements OnInit {
         this.message = message;
     }
 
-    setError(message: string) {
+    setError(message: string, messages: []) {
         this.currentClasses = [
             'alert',
             'alert-danger'
         ];
         this.message = message;
+        this.messages = messages;
     }
 }
