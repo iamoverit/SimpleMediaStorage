@@ -63,8 +63,7 @@ class StoreFilePost extends FormRequest
         ];
 
         return [
-            // 'fileContent' => ['required', 'mimetypes:'.implode(',', $mediaMimeTypes), 'min:102400', 'max:153600'],
-            'fileContent' => ['required', 'mimetypes:'.implode(',', $mediaMimeTypes), 'min:1', 'max:153600'], // TODO: fix that debuggin validation
+            'fileContent' => ['required', 'mimetypes:'.implode(',', $mediaMimeTypes), 'min:102400', 'max:153600'],
             'fileDescription' => ['required', 'string', 'max:256'],
             'fileSenderEmail' => ['required', 'email'],
         ];
