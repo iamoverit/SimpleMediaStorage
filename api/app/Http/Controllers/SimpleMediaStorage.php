@@ -35,13 +35,12 @@ class SimpleMediaStorage extends Controller
 
     public function store(StoreFilePost $request)
     {
-
-        /**
-         * @var $file UploadedFile
-         */
         DB::beginTransaction();
         $userFileModel = null;
         try {
+            /**
+             * @var $file UploadedFile
+             */
             $file = $request->fileContent;
             $fileHash = hash_file('md5', $file);
             $userHash = hash('md5', $request->input('fileSenderEmail'));
