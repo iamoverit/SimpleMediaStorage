@@ -6,6 +6,7 @@ use App\Http\Requests\StoreFilePost;
 use App\Mail\FileUploaded;
 use App\Models\UserFiles;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
@@ -14,25 +15,36 @@ use Mockery\Exception;
 
 class SimpleMediaStorage extends Controller
 {
-    private static $uploadedPath = '/uploaded';
+    use Storable;
 
+    /**
+     * Display a listing of the resource.
+     *
+     * @return Response
+     */
     public function index(Request $request)
     {
-        $user_hash = $request->route('user_hash');
-        $file_hash = $request->route('file_hash');
+        $userHash = $request->route('user_hash');
+        $fileHash = $request->route('file_hash');
         $headers = [
             'Set-Cookie' => 'fileDownload=true; path=/',
         ];
         $file = UserFiles::where(
             [
-                'user_hash' => $user_hash,
-                'file_hash' => $file_hash,
+                'user_hash' => $userHash,
+                'file_hash' => $fileHash,
             ]
         )->firstOrFail();
 
-        return Storage::download(self::$uploadedPath."/".$user_hash."/".$file_hash, $file->filename, $headers);
+        return Storage::download(self::uploadedPath()."/".$userHash."/".$fileHash, $file->filename, $headers);
     }
 
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param StoreFilePost $request
+     * @return array
+     */
     public function store(StoreFilePost $request)
     {
         DB::beginTransaction();
@@ -44,7 +56,7 @@ class SimpleMediaStorage extends Controller
             $file = $request->fileContent;
             $fileHash = hash_file('md5', $file);
             $userHash = hash('md5', $request->input('fileSenderEmail'));
-            $file->storeAs(self::$uploadedPath.'/'.$userHash, $fileHash);
+            $file->storeAs(self::uploadedPath().'/'.$userHash, $fileHash);
             $userFileModel = new UserFiles();
             $userFileModel->description = $request->input('fileDescription');
             $userFileModel->email = $request->input('fileSenderEmail');
@@ -53,7 +65,7 @@ class SimpleMediaStorage extends Controller
             $userFileModel->filename = $file->getClientOriginalName();
             $userFileModel->save();
             Mail::to($userFileModel->email)
-                ->send(new FileUploaded(self::$uploadedPath.'/'.$userHash.'/'.$fileHash));
+                ->send(new FileUploaded(self::uploadedPath().'/'.$userHash.'/'.$fileHash));
         } catch (Exception $exception) {
             DB::rollBack();
 

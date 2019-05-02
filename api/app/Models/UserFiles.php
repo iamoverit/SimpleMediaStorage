@@ -12,4 +12,8 @@ class UserFiles extends Model
      * @var string
      */
     protected $table = 'user_files';
+    protected $primaryKey = 'file_hash';
+    protected $keyType = 'string';
+    public $incrementing = false;
+
 }
