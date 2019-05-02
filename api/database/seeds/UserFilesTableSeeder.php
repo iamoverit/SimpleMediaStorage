@@ -11,14 +11,10 @@ class UserFilesTableSeeder extends Seeder
      */
     public function run()
     {
-//        factory(\App\Models\UserFiles::class, 2500)->create();
-
+        /** 5000000 rows */
         for($i = 0; $i < 1667; $i++) {
             $bulk = factory(\App\Models\UserFiles::class, 3000)->make();
             \App\Models\UserFiles::insert($bulk->toArray());
         }
-
-//        $bulk = factory(\App\Models\UserFiles::class, 25000)->make();
-//        \App\Models\UserFiles::insert($bulk->toArray());
     }
 }
