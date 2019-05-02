@@ -24,19 +24,12 @@ class SimpleMediaStorage extends Controller
      */
     public function index(Request $request)
     {
-        $userHash = $request->route('user_hash');
-        $fileHash = $request->route('file_hash');
         $headers = [
             'Set-Cookie' => 'fileDownload=true; path=/',
         ];
-        $file = UserFiles::where(
-            [
-                'user_hash' => $userHash,
-                'file_hash' => $fileHash,
-            ]
-        )->firstOrFail();
+        $file = $this->fileResource($request)->firstOrFail();
 
-        return Storage::download(self::uploadedPath()."/".$userHash."/".$fileHash, $file->filename, $headers);
+        return Storage::download(self::uploadedPath()."/". $file->user_hash."/". $file->file_hash, $file->filename, $headers);
     }
 
     /**
@@ -74,5 +67,19 @@ class SimpleMediaStorage extends Controller
         DB::commit();
 
         return ['status' => true];
+    }
+
+    /**
+     * @param Request $request
+     * @return mixed
+     */
+    private static function fileResource(Request $request)
+    {
+        return $file = UserFiles::where(
+            [
+                'user_hash' => $request->route('user_hash'),
+                'file_hash' => $request->route('user_hash'),
+            ]
+        );
     }
 }

@@ -25,3 +25,5 @@ Route::name('admin.')->prefix('admin')->group(function () {
     Route::put('/file/{user_hash}/{file_hash}', 'AdminController@update')->name('file.update');
     Route::delete('/file/{user_hash}/{file_hash}', 'AdminController@destroy')->name('file.destroy');
 });
+
+Auth::routes();
