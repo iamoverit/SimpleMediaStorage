@@ -38,12 +38,7 @@ class AdminController extends Controller
     {
         $userHash = $request->route('user_hash');
         $fileHash = $request->route('file_hash');
-        $file = UserFiles::where(
-            [
-                'user_hash' => $userHash,
-                'file_hash' => $fileHash,
-            ]
-        )->firstOrFail();
+        $file = UserFiles::findFile($userHash, $fileHash)->firstOrFail();
 
         return view('admin.edit', ['file' => $file]);
     }
@@ -58,18 +53,14 @@ class AdminController extends Controller
     {
         $userHash = $request->route('user_hash');
         $fileHash = $request->route('file_hash');
-        UserFiles::where(
-            [
-                'user_hash' => $userHash,
-                'file_hash' => $fileHash,
-            ]
-        )->update(
+        UserFiles::findFile($userHash, $fileHash)->update(
             [
                 'description' => $request->input('fileDescription'),
                 'email' => $request->input('fileSenderEmail'),
                 'filename' => $request->input('filename'),
             ]
         );
+
         return redirect()->back();
     }
 
@@ -83,12 +74,7 @@ class AdminController extends Controller
     {
         $userHash = $request->route('user_hash');
         $fileHash = $request->route('file_hash');
-        $files = UserFiles::where(
-            [
-                'user_hash' => $userHash,
-                'file_hash' => $fileHash,
-            ]
-        )->get();
+        $files = UserFiles::findFile($userHash, $fileHash)->get();
         foreach ($files as $file) {
             Storage::delete(self::uploadedPath()."/".$userHash."/".$fileHash, $file->filename);
         }

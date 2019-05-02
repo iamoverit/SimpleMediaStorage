@@ -18,16 +18,16 @@ class UserFiles extends Model
 
 
     /**
-     * Scope a query to only include popular users.
+     * Scope a query to find current file by user and file hashes.
      *
      * @param  \Illuminate\Database\Eloquent\Builder  $query
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function scopePopular($query, $userHash, $fileHash)
+    public function scopeFindFile($query, $userHash, $fileHash)
     {
         return $query->where(
             [
-                'user_hashz' => $userHash,
+                'user_hash' => $userHash,
                 'file_hash' => $fileHash,
             ]);
     }
