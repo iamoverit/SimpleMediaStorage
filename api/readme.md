@@ -1,3 +1,9 @@
+## Installation
+    > composer install
+    > php artisan migrate
+    > php artisan register:admin
+    > php artisan db:seed
+            
 ## Development server
 
 Use homestead https://laravel.com/docs/homestead to setup dev environment
