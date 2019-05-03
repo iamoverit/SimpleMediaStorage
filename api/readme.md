@@ -2,7 +2,7 @@
     > composer install
     > php artisan migrate
     > php artisan register:admin
-    > php artisan db:seed
+    > php artisan db:seed        <-- if you want to seed your database by over 5000000 fake test rows
             
 ## Development server
 
