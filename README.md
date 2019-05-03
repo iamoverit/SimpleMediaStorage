@@ -4,7 +4,7 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 ## Configuring
 
-Use [`src/environments/environment.prod.ts`](src/environments/environment.prod.ts) for production build and [`src/environments/environment.ts`](src/environments/environment.ts) for development build.
+Configure [`src/environments/environment.prod.ts`](src/environments/environment.prod.ts) for production build and [`src/environments/environment.ts`](src/environments/environment.ts) for development build.
 Specify backend api server.
 
 ## Development server
@@ -13,7 +13,7 @@ Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app w
 
 ## Code scaffolding
 
-Configure `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
 
 ## Build
 
