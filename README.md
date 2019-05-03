@@ -4,7 +4,7 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 ## Configuring
 
-Use [`src/environment.prod.ts`](src/environments/environment.prod.ts) for production build and [`src/environment.ts`](src/environments/environment.ts) for development build.
+Use [`src/environments/environment.prod.ts`](src/environments/environment.prod.ts) for production build and [`src/environments/environment.ts`](src/environments/environment.ts) for development build.
 Specify backend api server.
 
 ## Development server
